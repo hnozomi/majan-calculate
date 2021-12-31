@@ -83,10 +83,11 @@ export default function App() {
     }
   ]);
 
-  // useEffect(() => {
-  //   const total = data[0].mem1 + data[1].mem1 + data[2].mem1;
-  //   console.log(total);
-  // }, [data]);
+  useEffect(() => {
+    const total =
+      Number(data[0].mem3) + Number(data[1].mem3) + Number(data[2].mem3);
+    console.log(total);
+  }, [data]);
 
   return (
     <>
