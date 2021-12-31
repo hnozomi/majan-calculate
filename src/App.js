@@ -4,6 +4,7 @@ import MaterialTable from "material-table";
 import { SettingsOverscanOutlined } from "@material-ui/icons";
 
 export default function App() {
+  const [complete, setComplete] = useState();
   const [members, setMembers] = useState([]);
   const [value, setValue] = useState();
   const [columns, setColumns] = useState([
