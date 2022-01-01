@@ -1,31 +1,77 @@
 import { useEffect, useState } from "react";
 
 import MaterialTable from "material-table";
+import { Typography } from "@mui/material";
+import { Button } from "@material-ui/core";
 
 export const CalculatePage = () => {
+  const member1 = localStorage.getItem("Member1");
+  const member2 = localStorage.getItem("Member2");
+  const member3 = localStorage.getItem("Member3");
+  const member4 = localStorage.getItem("Member4");
   const [members, setMembers] = useState([]);
   const [value, setValue] = useState();
+  // const [total, setTotal] = useState();
+
+  // useEffect(() => {
+  //   console.log(data, "data");
+  //   const total1 =
+  //     Number(data[0].mem1) + Number(data[1].mem1) + Number(data[2].mem1);
+  //   console.log(total1, "total1");
+  //   setTotal(total1);
+  // }, []);
+
   const [columns, setColumns] = useState([
     {
       title: "試合数",
       field: "itemName",
 
       cellStyle: {
-        minWidth: "100%"
+        minWidth: "20%"
       },
       editable: "never"
     },
-    { title: "掛け金", field: "bet" },
-    { title: "焼き鳥の有無", field: "yakitori" },
-    { title: "健太    ", field: "mem1" },
-    { title: "ゆうき   ", field: "mem2" },
-    { title: "はまかた ", field: "mem3" }
+    {
+      title: "掛け金",
+      field: "bet",
+
+      cellStyle: {
+        width: "20%",
+        minWidth: "100%"
+      }
+    },
+    {
+      title: member1,
+      field: "mem1",
+
+      cellStyle: {
+        width: "30%",
+        minWidth: "100%"
+      }
+    },
+    {
+      title: member2,
+      field: "mem2",
+
+      cellStyle: {
+        width: "30%",
+        minWidth: "100%"
+      }
+    },
+    {
+      title: member3,
+      field: "mem3",
+
+      cellStyle: {
+        width: "30%",
+        minWidth: "100%"
+      }
+    }
   ]);
   const [data, setData] = useState([
     {
-      itemName: "1",
+      itemName: 1,
       bet: "-",
-      yakitori: "あり",
       mem1: 0,
       mem2: 0,
       mem3: 0
@@ -33,7 +79,6 @@ export const CalculatePage = () => {
     {
       itemName: 2,
       bet: "-",
-      yakitori: 400,
       mem1: 0,
       mem2: 0,
       mem3: 0
@@ -41,7 +86,6 @@ export const CalculatePage = () => {
     {
       itemName: 3,
       bet: "-",
-      yakitori: 500,
       mem1: 0,
       mem2: 0,
       mem3: 0
@@ -49,7 +93,6 @@ export const CalculatePage = () => {
     {
       itemName: 4,
       bet: "-",
-      yakitori: 200,
       mem1: 0,
       mem2: 0,
       mem3: 0
@@ -57,23 +100,6 @@ export const CalculatePage = () => {
     {
       itemName: 5,
       bet: "-",
-      yakitori: 250,
-      mem1: 0,
-      mem2: 0,
-      mem3: 0
-    },
-    {
-      itemName: "合計",
-      bet: "-",
-      yakitori: "-",
-      mem1: 0,
-      mem2: 0,
-      mem3: 0
-    },
-    {
-      itemName: "収支",
-      bet: "-",
-      yakitori: "-",
       mem1: 0,
       mem2: 0,
       mem3: 0
@@ -81,42 +107,34 @@ export const CalculatePage = () => {
   ]);
 
   useEffect(() => {
-    const total =
-      Number(data[0].mem3) + Number(data[1].mem3) + Number(data[2].mem3);
-    console.log(total);
+    console.log(data, "data");
+    const total1 =
+      Number(data[0].mem1) + Number(data[1].mem1) + Number(data[2].mem1);
+    console.log(total1, "total1");
+    setTotal(total1);
   }, [data]);
+
+  const [total, setTotal] = useState();
+
+  const onClear = () => {
+    localStorage.removeItem("Member1");
+    localStorage.removeItem("Member2");
+    localStorage.removeItem("Member3");
+    localStorage.removeItem("Member4");
+    localStorage.removeItem("yakitori");
+    localStorage.removeItem("chip");
+    localStorage.removeItem("Complete");
+  };
 
   return (
     <>
       <MaterialTable
         columns={columns}
-        // columns={[
-        //   { title: "試合数", field: "itemName" },
-        //   { title: "掛け金", field: "bet" },
-        //   { title: "焼き鳥の有無", field: "yakitori" },
-        //   { title: "健太", field: "mem1" },
-        //   { title: "ゆうき", field: "mem2" },
-        //   { title: "はまかた", field: "mem3" }
-        // ]}
         data={data}
-        // data={[
-        //   {
-        //     itemName: "1",
-        //     bet: "点1",
-        //     yakitori: "あり",
-        //     mem1: 300
-        //   },
-        //   { itemName: "ケーキ", bet: "お菓子", yakitori: 400, mem1: 480 },
-        //   { itemName: "りんご", bet: "フルーツ", yakitori: 500, mem1: 360 },
-        //   { itemName: "バナナ", bet: "フルーツ", yakitori: 200, mem1: 300 },
-        //   { itemName: "みかん", bet: "フルーツ", yakitori: 250, mem1: 180 }
-        // ]}
         cellEditable={{
           cellStyle: {},
           onCellEditApproved: (newValue, oldValue, rowData, columnDef) => {
             return new Promise((resolve, reject) => {
-              console.log("newValue: " + newValue);
-              console.log("oldValue: " + oldValue);
               const clonedData = [...data];
               clonedData[rowData.tableData.id][columnDef.field] = newValue;
               setData(clonedData);
@@ -130,6 +148,14 @@ export const CalculatePage = () => {
           headerStyle: { whiteSpace: "nowrap" }
         }}
       />
+      <Typography sx={{ mt: 3 }}>結果</Typography>
+      <Typography sx={{ p: 0, m: 0 }}>{`${member1}:    ${total}円`}</Typography>
+      <Typography sx={{ p: 0, m: 0 }}>{`${member2}:    ${total}円`}</Typography>
+      <Typography sx={{ p: 0, m: 0 }}>{`${member3}:    ${total}円`}</Typography>
+      <Typography sx={{ p: 0, m: 0 }}>{`${member4}:    ${total}円`}</Typography>
+      <Button sx={{ mt: 1, mb: 1 }} variant="contained" onClick={onClear}>
+        クリアする
+      </Button>
     </>
   );
 };

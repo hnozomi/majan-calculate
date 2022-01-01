@@ -8,16 +8,16 @@ import { Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 
-export const Setting = () => {
+export const Setting = (props) => {
+  const { onComplate } = props;
   const [members, setMembers] = useState({
     first: "",
     second: "",
     third: "",
     fourth: ""
   });
-  const [chip, setChip] = useState();
-  const [yakitori, setYakitori] = useState();
-  const [complete, setComplete] = useState();
+  const [chip, setChip] = useState("チップあり");
+  const [yakitori, setYakitori] = useState("焼き鳥あり");
   const [chipcheck, setChipCheck] = useState(false);
   const [yakitoricheck, setYakitoriCheck] = useState(false);
 
@@ -31,7 +31,13 @@ export const Setting = () => {
   };
   const onSubmit = (e) => {
     e.preventDefault();
-    setComplete(true);
+    onComplate();
+    localStorage.setItem("Member1", members.first);
+    localStorage.setItem("Member2", members.second);
+    localStorage.setItem("Member3", members.third);
+    localStorage.setItem("Member4", members.fourth);
+    localStorage.setItem("chip", chip);
+    localStorage.setItem("yakitori", yakitori);
   };
   const onChange = (e) => {
     e.preventDefault();
@@ -40,11 +46,22 @@ export const Setting = () => {
     setMembers(tempMembers);
   };
 
+  const onClear = () => {
+    localStorage.removeItem("Member1");
+    localStorage.removeItem("Member2");
+    localStorage.removeItem("Member3");
+    localStorage.removeItem("Member4");
+    localStorage.removeItem("yakitori");
+    localStorage.removeItem("chip");
+  };
   return (
     <Box sx={{ p: 2 }}>
       <Typography variant="h5" sx={{ mb: 3 }}>
         設定
       </Typography>
+      <Button sx={{ mt: 1, mb: 1 }} variant="contained" onClick={onClear}>
+        クリアする
+      </Button>
       <form onSubmit={onSubmit}>
         <Typography sx={{ mb: 1 }}>対戦相手</Typography>
         <TextField
