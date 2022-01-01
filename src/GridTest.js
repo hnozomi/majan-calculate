@@ -3,6 +3,7 @@ import { DataGrid } from "@mui/x-data-grid";
 
 import Button from "@material-ui/core/Button";
 import { FormSelect } from "./FormSelect";
+import { FormInput } from "./FormInput";
 
 const member1 = localStorage.getItem("Member1");
 const member2 = localStorage.getItem("Member2");
@@ -34,10 +35,42 @@ const columns = [
       <FormSelect />
     )
   },
-  { field: "member1", headerName: [member1], width: 100 }, // member1だけにすると、文字列になる。[]で囲むことで変数扱いにできた
-  { field: "member2", headerName: [member2], width: 100 },
-  { field: "member3", headerName: [member3], width: 100 },
-  { field: "member4", headerName: [member4], width: 100 }
+  {
+    field: "member1",
+    headerName: [member1],
+    sortable: false,
+    width: 100,
+    disableClickEventBubbling: true,
+    renderCell: (params) => <FormInput />
+  },
+  {
+    field: "member2",
+    headerName: [member2],
+    sortable: false,
+    width: 100,
+    disableClickEventBubbling: true,
+    renderCell: (params) => <FormInput />
+  },
+  {
+    field: "member3",
+    headerName: [member3],
+    sortable: false,
+    width: 100,
+    disableClickEventBubbling: true,
+    renderCell: (params) => <FormInput />
+  },
+  {
+    field: "member4",
+    headerName: [member4],
+    sortable: false,
+    width: 100,
+    disableClickEventBubbling: true,
+    renderCell: (params) => <FormInput />
+  }
+  // { field: "member1", headerName: [member1], width: 100 } // member1だけにすると、文字列になる。[]で囲むことで変数扱いにできた
+  // { field: "member2", headerName: [member2], width: 100 },
+  // { field: "member3", headerName: [member3], width: 100 },
+  // { field: "member4", headerName: [member4], width: 100 }
 ];
 
 // データ
