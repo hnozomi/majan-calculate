@@ -2,9 +2,9 @@ import { useState } from "react";
 
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
-import { ViewArraySharp } from "@material-ui/icons";
 
-export const FormSelect = () => {
+export const FormSelect = (props) => {
+  console.log(props);
   const [age, setAge] = useState("");
 
   const handleChange = (event) => {
